@@ -23,7 +23,9 @@
 
   <h3>Biodata</h3>
 
-  <table class="table">
+  <button type="button" class="btn btn-primary" name="add_row">Add row</button>
+
+  <table class="table" id="biodata_table">
     <thead>
       <th>
         Delete?
@@ -75,8 +77,6 @@
       <% end %>
     </tbody>
   </table>
-
-
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

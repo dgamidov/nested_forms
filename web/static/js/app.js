@@ -19,3 +19,53 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+const App = {
+  init() {
+
+  function getRowHTML(index) {
+    const html = `
+    <tr>
+      <td>
+        <div class="form-group">
+        </div>
+      </td>
+      <td>
+      </td>
+      <td>
+        <div class="form-group">
+          <input class="form-control" id="user_user_biodata_${index}_weight"
+                 name="user[user_biodata][${index}][weight]" type="number">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <input class="form-control" id="user_user_biodata_${index}_height"
+                 name="user[user_biodata][${index}][height]" type="number">
+        </div>
+      </td>
+    </tr>`
+    return html;
+  }
+
+  function addNewRow() {
+    const table = $('#biodata_table tbody')
+    const rowsInTable = $('#biodata_table tbody tr');
+    const rowsInTableCount = rowsInTable.length;
+    const lastRow = rowsInTable.last();
+
+    if (rowsInTableCount === 0) {
+      const rowHTML = getRowHTML(0);
+      $(rowHTML).insertAfter($(table));
+    } else {
+      const rowHTML = getRowHTML(rowsInTableCount);
+      $(rowHTML).insertAfter($(lastRow));
+    }
+  }
+
+  $('button[name="add_row"]').click(function(){
+    addNewRow();
+  })
+}};
+
+App.init();
