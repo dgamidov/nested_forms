@@ -2,6 +2,7 @@ defmodule NF.UserController do
   use NF.Web, :controller
 
   alias NF.User
+  alias NF.UserBiodata
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -9,7 +10,7 @@ defmodule NF.UserController do
   end
 
   def new(conn, _params) do
-    changeset = User.changeset(%User{})
+    changeset = User.changeset(%User{user_biodata: [%UserBiodata{}]})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -27,18 +28,30 @@ defmodule NF.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user =
+      User
+      |> Repo.get!(id)
+      |> Repo.preload([:user_survey, :user_biodata])
+
     render(conn, "show.html", user: user)
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user =
+      User
+      |> Repo.get!(id)
+      |> Repo.preload([:user_survey, :user_biodata])
+
     changeset = User.changeset(user)
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Repo.get!(User, id)
+    user =
+      User
+      |> Repo.get!(id)
+      |> Repo.preload([:user_survey, :user_biodata])
+
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
@@ -52,7 +65,10 @@ defmodule NF.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user =
+      User
+      |> Repo.get!(id)
+      |> Repo.preload([:user_survey, :user_biodata])
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).

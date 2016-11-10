@@ -11,6 +11,73 @@
     <%= error_tag f, :name %>
   </div>
 
+  <h3>Survey</h3>
+
+  <%= inputs_for f, :user_survey, fn i -> %>
+    <div class="form-group">
+      <%= label i, :question, class: "control-label" %>
+      <%= textarea i, :question, class: "form-control" %>
+      <%= error_tag i, :question %>
+    </div>
+  <% end %>
+
+  <h3>Biodata</h3>
+
+  <table class="table">
+    <thead>
+      <th>
+        Delete?
+      </th>
+      <th>
+        Row #
+      </th>
+      <th>
+        Weight
+      </th>
+      <th>
+        Height
+      </th>
+    </thead>
+    <tbody>
+      <%= inputs_for f, :user_biodata, fn j -> %>
+        <tr>
+          <td>
+            <div class="form-group">
+              <%= if j.data.inserted_at do %>
+                <%= checkbox j, :delete %>
+              <% end %>
+            </div>
+          </td>
+          <td>
+            <%= #{j.index + 1} %>
+          </td>
+          <td>
+            <div class="form-group">
+              <%= number_input j, :weight, class: "form-control" %>
+              <%= if message = j.errors[:weight] do %>
+                <span class="help-block">
+                  <%= message %>
+                </span>
+              <% end %>
+            </div>
+          </td>
+          <td>
+            <div class="form-group">
+              <%= number_input j, :height, class: "form-control" %>
+              <%= if message = j.errors[:height] do %>
+                <span class="help-block">
+                  <%= message %>
+                </span>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
