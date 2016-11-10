@@ -3,6 +3,8 @@ defmodule NF.User do
 
   schema "users" do
     field :name, :string
+    has_one :user_survey, NF.UserSurvey
+    has_many :user_biodata, NF.UserBiodata
 
     timestamps()
   end
@@ -15,5 +17,7 @@ defmodule NF.User do
     |> cast(params, [:name])
     |> validate_required([:name])
     |> unique_constraint(:name)
+    |> cast_assoc(:user_survey)
+    |> cast_assoc(:user_biodata)
   end
 end
