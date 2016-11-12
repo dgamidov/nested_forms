@@ -49,12 +49,13 @@ const App = {
   }
 
   function addNewRow(tableId) {
-    const tbodySelector = $(tableId + ' tbody')
+    const tbodySelector = tableId + ' tbody'
+    const tbody = $(tbodySelector)
 
-    if (tbodySelector.length === 0) {
+    if (tbody.length === 0) {
       throw `Error: body of the table with id ${tableId} does not exist`
     } else {
-      const countOfRowsInTable = $(tbodySelector).filter('tr').length;
+      const countOfRowsInTable = $(tbodySelector + ' tr').length;
       const newRowHTML = getRowHTML(countOfRowsInTable);
 
       $(tbodySelector).append($(newRowHTML));
