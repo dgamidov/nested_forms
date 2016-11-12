@@ -48,23 +48,21 @@ const App = {
     return html;
   }
 
-  function addNewRow() {
-    const table = $('#biodata_table tbody')
-    const rowsInTable = $('#biodata_table tbody tr');
-    const rowsInTableCount = rowsInTable.length;
-    const lastRow = rowsInTable.last();
+  function addNewRow(tableId) {
+    const tbodySelector = $(tableId + ' tbody')
 
-    if (rowsInTableCount === 0) {
-      const rowHTML = getRowHTML(0);
-      $(rowHTML).insertAfter($(table));
+    if (tbodySelector.length === 0) {
+      throw `Error: body of the table with id ${tableId} does not exist`
     } else {
-      const rowHTML = getRowHTML(rowsInTableCount);
-      $(rowHTML).insertAfter($(lastRow));
+      const countOfRowsInTable = $(tbodySelector).filter('tr').length;
+      const newRowHTML = getRowHTML(countOfRowsInTable);
+
+      $(tbodySelector).append($(newRowHTML));
     }
   }
 
   $('button[name="add_row"]').click(function(){
-    addNewRow();
+    addNewRow('#biodata_table');
   })
 }};
 
